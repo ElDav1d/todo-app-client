@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import AddForm from "../components/AddForm";
 
 function TodoList() {
@@ -30,12 +31,14 @@ function TodoList() {
 
   return (
     <div>
-      <AddForm />
+      <AddForm getData={getData} />
       <hr />
       <h3>Lista de To-Do</h3>
       <ul>
-        {allTodos.map(({ title, _id }) => (
-          <li key={_id}>{title}</li>
+        {allTodos.map((todo) => (
+          <li key={todo._id}>
+            <Link to={`/todos/${todo._id}/details`}>{todo.title}</Link>
+          </li>
         ))}
       </ul>
     </div>

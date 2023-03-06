@@ -1,11 +1,15 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  deleteOneTodoService,
+  getSingleTodoService,
+} from "../services/todo.services";
 
 function TodoDetails() {
   const [singleTodo, setSingleTodo] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
   const { todoId } = useParams();
+  const redirect = useNavigate();
 
   useEffect(() => {
     getData();
@@ -13,14 +17,23 @@ function TodoDetails() {
 
   const getData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5005/api/todo/${todoId}`
-      );
+      const response = await getSingleTodoService(todoId);
 
       setSingleTodo(response.data);
       setIsFetching(false);
     } catch (error) {
-      console.log(error);
+      redirect("/error");
+      // console.log(error); // ! TRACE IT ON devtools > nertwork
+    }
+  };
+
+  const handleDeleteTodo = async () => {
+    try {
+      await deleteOneTodoService(todoId);
+      redirect("/todos");
+    } catch (error) {
+      redirect("/error");
+      // console.log(error); // ! TRACE IT ON devtools > nertwork
     }
   };
 
@@ -35,6 +48,8 @@ function TodoDetails() {
           <h4>{singleTodo.title}</h4>
           <p>{singleTodo.description}</p>
           <p>Is Urgent: {singleTodo.isUrgent ? "👍" : "👎"}</p>
+          <button onClick={handleDeleteTodo}>DELETE</button>
+          <button>EDIT</button>
         </div>
       )}
     </div>

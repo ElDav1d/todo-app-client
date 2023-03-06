@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createOneTodoService } from "../services/todo.services";
 
 function AddForm(props) {
   const redirect = useNavigate();
@@ -20,15 +21,13 @@ function AddForm(props) {
     const newTodo = { title, description, isUrgent };
 
     try {
-      const response = await axios.post(
-        "http://localhost:5005/api/todo",
-        newTodo
-      );
+      const response = await createOneTodoService(newTodo);
       console.log(response);
       // redirect("/todos"); //! NOT WORKING: React is not re-rendering if redirect to SAME ROUTE
       props.getData(); // TRIGGER FUNCTION ON PARENT (passed as prop)
     } catch (error) {
       console.log(error);
+      /// REDIRECT
     }
   };
 

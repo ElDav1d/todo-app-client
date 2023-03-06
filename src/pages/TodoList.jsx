@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AddForm from "../components/AddForm";
+import { getAllTodosService } from "../services/todo.services";
 
 function TodoList() {
   const [allTodos, setAllTodos] = useState(null);
@@ -17,14 +17,16 @@ function TodoList() {
   const getData = async () => {
     setIsFetching(true); //
     try {
-      const response = await axios.get("http://localhost:5005/api/todo");
+      const response = await getAllTodosService();
 
       setTimeout(() => {
+        // SIMULATING SERVER RESPONSE DELAY
         setAllTodos(response.data);
         setIsFetching(false);
       }, 250);
     } catch (error) {
       console.log(error);
+      /// REDIRECT
     }
   };
 

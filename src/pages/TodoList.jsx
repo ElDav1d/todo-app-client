@@ -15,11 +15,14 @@ function TodoList() {
   }, []); // ComponentDidMount
 
   const getData = async () => {
+    setIsFetching(true); //
     try {
       const response = await axios.get("http://localhost:5005/api/todo");
 
-      setAllTodos(response.data);
-      setIsFetching(false);
+      setTimeout(() => {
+        setAllTodos(response.data);
+        setIsFetching(false);
+      }, 250);
     } catch (error) {
       console.log(error);
     }

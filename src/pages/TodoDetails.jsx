@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   deleteOneTodoService,
   getSingleTodoService,
@@ -49,7 +49,7 @@ function TodoDetails() {
           <p>{singleTodo.description}</p>
           <p>Is Urgent: {singleTodo.isUrgent ? "👍" : "👎"}</p>
           <button onClick={handleDeleteTodo}>DELETE</button>
-          <button>EDIT</button>
+          <Link to={`/todos/${todoId}/edit`}>EDIT</Link>
         </div>
       )}
     </div>

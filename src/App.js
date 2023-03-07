@@ -8,7 +8,8 @@ import TodoDetails from "./pages/TodoDetails";
 import TodoEdit from "./pages/TodoEdit";
 import Error from "./pages/Error";
 import NotFound from "./pages/NotFound";
-
+import Signup from "./pages/auth/Signup";
+import Login from "./pages/auth/Login";
 // components
 import Navbar from "./components/Navbar";
 
@@ -22,6 +23,9 @@ function App() {
         <Route path="/todos" element={<TodoList />} />
         <Route path="/todos/:todoId/details" element={<TodoDetails />} />
         <Route path="/todos/:todoId/edit" element={<TodoEdit />} />
+
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
 
         {/* error FE routes */}
         <Route path="/error" element={<Error />} />

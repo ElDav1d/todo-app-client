@@ -15,8 +15,18 @@ function Navbar() {
 
   return (
     <div>
-      <NavLink to="/" style={toggleStyles}> Home </NavLink>
-      <NavLink to="/todos" end={true} style={toggleStyles}> Ver Lista </NavLink>
+      <NavLink to="/" style={toggleStyles}>
+        Home
+      </NavLink>
+      <NavLink to="/signup" style={toggleStyles}>
+        Registro
+      </NavLink>
+      <NavLink to="/login" style={toggleStyles}>
+        Acceso
+      </NavLink>
+      <NavLink to="/todos" end={true} style={toggleStyles}>
+        Ver Lista
+      </NavLink>
     </div>
   );
 }

@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/auth.context";
+import { loginService } from "../../services/auth.services";
 
 function Login() {
+  const { authenticateUser } = useContext(AuthContext);
+  const redirect = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -10,6 +16,29 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     // ... login logic here
+
+    const userCredentials = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await loginService(userCredentials);
+      console.log(response);
+
+      //! STORE TOKEN on LocalStorage (Will expireIn, not deleted)
+      localStorage.setItem("authToken", response.data.authToken);
+      //* Will go to CONTEXT
+      authenticateUser();
+      console.log("FROM LOGIN: token was validated");
+    } catch (error) {
+      //* DETERMINE ERROR STATUS (status), ACT ACCORDINGLY (errorMessage)
+      if (error.response.status === 400) {
+        setErrorMessage(error.response.data.errorMessage); // TELL USER HOW SO SOLVE IT
+      } else {
+        redirect("/error");
+      }
+    }
   };
 
   return (
@@ -32,6 +61,10 @@ function Login() {
           value={password}
           onChange={handlePasswordChange}
         />
+
+        <br />
+        <br />
+        {errorMessage && <p>{errorMessage}</p>}
 
         <button type="submit">Login</button>
       </form>

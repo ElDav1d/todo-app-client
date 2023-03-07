@@ -1,10 +1,10 @@
-import axios from "axios";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/auth.context";
 import { createOneTodoService } from "../services/todo.services";
-
 function AddForm(props) {
   const redirect = useNavigate();
+  const { isLoggedIn } = useContext(AuthContext);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isUrgent, setIsUrgent] = useState(false);
@@ -17,17 +17,19 @@ function AddForm(props) {
     e.preventDefault();
     //* CONTACT BACKEND => create Todo and pass data
     //! event handler is ASYNC
-
-    const newTodo = { title, description, isUrgent };
-
-    try {
-      const response = await createOneTodoService(newTodo);
-      console.log(response);
-      // redirect("/todos"); //! NOT WORKING: React is not re-rendering if redirect to SAME ROUTE
-      props.getData(); // TRIGGER FUNCTION ON PARENT (passed as prop)
-    } catch (error) {
-      console.log(error);
-      /// REDIRECT
+    if (isLoggedIn) {
+      const newTodo = { title, description, isUrgent };
+      try {
+        const response = await createOneTodoService(newTodo);
+        console.log(response);
+        // redirect("/todos"); //! NOT WORKING: React is not re-rendering if redirect to SAME ROUTE
+        props.getData(); // TRIGGER FUNCTION ON PARENT (passed as prop)
+      } catch (error) {
+        console.log(error);
+        /// REDIRECT
+      }
+    } else {
+      redirect("/login");
     }
   };
 

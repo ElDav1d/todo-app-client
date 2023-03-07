@@ -30,22 +30,23 @@ function TodoList() {
     }
   };
 
-  if (isFetching === true) {
-    return <h3>...loading data</h3>;
-  }
-
   return (
     <div>
       <AddForm getData={getData} />
       <hr />
       <h3>Lista de To-Do</h3>
-      <ul>
-        {allTodos.map((todo) => (
-          <li key={todo._id}>
-            <Link to={`/todos/${todo._id}/details`}>{todo.title}</Link>
-          </li>
-        ))}
-      </ul>
+
+      {isFetching ? (
+        <h3>...loading data</h3>
+      ) : (
+        <ul>
+          {allTodos.map((todo) => (
+            <li key={todo._id}>
+              <Link to={`/todos/${todo._id}/details`}>{todo.title}</Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

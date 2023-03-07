@@ -24,7 +24,6 @@ function Login() {
 
     try {
       const response = await loginService(userCredentials);
-      console.log(response);
 
       //! STORE TOKEN on LocalStorage (Will expireIn, not deleted)
       localStorage.setItem("authToken", response.data.authToken);

@@ -30,6 +30,7 @@ function Login() {
       //* Will go to CONTEXT
       authenticateUser();
       console.log("FROM LOGIN: token was validated");
+      redirect("/todos");
     } catch (error) {
       //* DETERMINE ERROR STATUS (status), ACT ACCORDINGLY (errorMessage)
       if (error.response.status === 400) {

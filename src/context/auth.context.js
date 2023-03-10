@@ -11,11 +11,11 @@ function AuthWrapper(props) {
 
   // auth functions
   const authenticateUser = async () => {
+    setIsFetching(true);
     try {
       const response = await verifyService();
       console.log("CONTEXT: token is valid");
 
-      setIsFetching(true);
       setIsLoggedIn(true);
       setLoggedUser(response.data); // ! FROM BE = req.payload
       setIsFetching(false);

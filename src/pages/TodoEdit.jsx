@@ -43,7 +43,7 @@ function TodoEdit() {
         isUrgent,
       };
 
-      updateOneTodoService(todoId, updatedTodo);
+      await updateOneTodoService(todoId, updatedTodo);
       redirect("/todos");
     } catch (error) {
       redirect("/error");
